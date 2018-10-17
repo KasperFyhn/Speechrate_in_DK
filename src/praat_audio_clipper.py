@@ -9,13 +9,10 @@ def get_sounding_clips(sound: psm.Sound):
     # get a grid with sounding and silent areas
     grid = psm.praat.call(sound, 'To TextGrid (silences)', 100, 0, -35, 0.5,
                           0.05, "silent", "sounding")
+    
     # clip the Sound into several shorter clips according to the grid
     clipped_files = psm.praat.call([sound, grid], 'Extract intervals where', 1,
                                    "no", "is equal to", "sounding")
-    # sort out clips shorter than 0.13 seconds as these can crash the syllable
-    # dection script
-    clipped_files = [sound for sound in clipped_files
-                     if not sound.get_total_duration() < 0.13]
 
     return clipped_files
 
