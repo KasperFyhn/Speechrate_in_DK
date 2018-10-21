@@ -54,13 +54,13 @@ def concatenate_short_clips(clips: list, clip_time: float):
 # get the data dir and make a list of the .wav files
 datadir = input('Please, provide the folder containing data: ')
 os.chdir(datadir)
-data = glob.glob('*.wav')
+files = glob.glob('*.wav')
 
 # prepare a folder to contain all the clipped files
 if not os.path.exists('clipped_data'):
     os.mkdir('clipped_data')
 
-for file in data:
+for file in files:
     print('Now processing: ' + file + ' ...', flush=True)
     
     # load the file into a Praat Sound object and extract channels
@@ -94,5 +94,5 @@ for file in data:
         else:
             clips.save(file_name + '_1.wav', format=psm.SoundFileFormat.WAV)
             
-        os.chdir('..')
+        os.chdir(datadir)
 
