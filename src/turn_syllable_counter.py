@@ -12,7 +12,6 @@ class TextGrid:
         
         raw = open(path, 'r').read()
         items = re.split(r'item \[\d\]:', raw)
-        raw.__delitem__()
         items = [item.split('\n') for item in items[1:]]
         items = [TextTier(item) if '"TextTier"' in item[1] else
                  IntervalTier(item ) if '"IntervalTier"' in item[1] else []
@@ -71,8 +70,8 @@ files = glob.glob('*.TextGrid')
 report = open('../report.csv', 'w+')
 
 print('file,turn id,nsyll,npause,dur (s),phonation time,' +
-      'speechrate (nsyll/dur), articulation rate (nsyll/phonation time)',
-      file=report)
+      'speechrate (nsyll/dur),articulation rate (nsyll/phonation time),' +
+      'ASD (speakingtime / nsyll),turn start, turn end', file=report)
 
 for file in files:
     file_name = file.replace('.TextGrid', '')
@@ -110,11 +109,13 @@ for file in files:
         nsyll = len(sylls)
         npause = len(pauses)
         turn_dur = end - start
-        phon_time = sum(dur(snd) for snd in soundings)
+        phon_time = sum(dur(sound) for sound in soundings)
         speech_rate = nsyll / turn_dur
         artic_rate = nsyll / phon_time
+        ASD = phon_time / nsyll
         
         print(f'{file_name},{i},{nsyll},{npause},{turn_dur:.3},' + 
-              f'{phon_time:.3},{speech_rate:.4},{artic_rate:.4}', file=report)
+              f'{phon_time:.3},{speech_rate:.4},{artic_rate:.4},' +
+              '{ASD},{start},{end}', file=report)  
 
 report.close()
