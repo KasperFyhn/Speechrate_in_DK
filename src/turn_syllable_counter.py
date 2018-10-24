@@ -71,7 +71,7 @@ report = open('../report.csv', 'w+')
 
 print('file,turn id,nsyll,npause,dur (s),phonation time,' +
       'speechrate (nsyll/dur),articulation rate (nsyll/phonation time),' +
-      'ASD (speakingtime / nsyll),turn start, turn end', file=report)
+      'turn start, turn end', file=report)
 
 for file in files:
     file_name = file.replace('.TextGrid', '')
@@ -116,6 +116,6 @@ for file in files:
         
         print(f'{file_name},{i},{nsyll},{npause},{turn_dur:.3},' + 
               f'{phon_time:.3},{speech_rate:.4},{artic_rate:.4},' +
-              '{ASD},{start},{end}', file=report)  
+              '{start},{end}', file=report)  
 
 report.close()
