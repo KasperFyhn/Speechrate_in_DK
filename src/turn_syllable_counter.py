@@ -112,10 +112,9 @@ for file in files:
         phon_time = sum(dur(sound) for sound in soundings)
         speech_rate = nsyll / turn_dur
         artic_rate = nsyll / phon_time
-        ASD = phon_time / nsyll
         
-        print(f'{file_name},{i},{nsyll},{npause},{turn_dur:.3},' + 
-              f'{phon_time:.3},{speech_rate:.4},{artic_rate:.4},' +
-              '{start},{end}', file=report)  
+        print(f'{file_name},{i},{nsyll},{npause},{turn_dur},' + 
+              f'{phon_time},{speech_rate},{artic_rate},{start},{end}',
+              file=report)  
 
 report.close()
