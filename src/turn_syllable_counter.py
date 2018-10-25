@@ -23,8 +23,7 @@ class TextGrid:
         self.items = {item.name: item for item in items}
         
 class TextTier:
-    '''A representation of a TextTier in a TextGrid. All points in the tier are
-    loaded into a list of dicts containing mark name/number and times.'''
+    '''A representation of a TextTier in a TextGrid. Each points item should have a 'time' entry and a 'mark' entry.'''
     
     def __init__(self, lines):
         self.name = lines[2].split('"')[1]
@@ -37,11 +36,12 @@ class TextTier:
         self.points = [{'time': float(point[1].split('=')[1].strip()),
                         'mark': point[2].split('"')[1]}
                        for point in points]
+    
        
 class IntervalTier:
-    '''A representation of an IntervalTier in a TextGrid. All intervals in the
-    tier are loaded into a list of dicts containing the text, start time and
-    end time.'''
+    '''A representation of an IntervalTier in a TextGrid. Each intervals item
+    should have 'xmin' and 'xmax' entries to denote start and end and a 'text'
+    entry.'''
 
     def __init__(self, name, xmin, xmax, intervals):
         self.name = name
@@ -51,6 +51,11 @@ class IntervalTier:
         
     @classmethod
     def from_lines(cls, lines):
+        '''All intervals in the tier are loaded into a list of dicts containing
+        the text, start time and  end time. Also the name, xmin and xmax are
+        saved. The lines that are passed should be from 'items[x]:' to the last
+        interval.'''
+        
         name = lines[2].split('"')[1]
         xmin = float(lines[3].split('=')[1].strip())
         xmax = float(lines[4].split('=')[1].strip())
