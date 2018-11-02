@@ -24,6 +24,7 @@ for file in files:
     file_name = os.path.basename(file)
     file_name = file_name.replace('.WAV', '')
     for ch in channels:
-        channels[ch].save(f'{file_name}_{ch}.wav', format=psm.SoundFileFormat.WAV)
+        channels[ch].save(f'{file_name}_{ch}.wav',
+                          format=psm.SoundFileFormat.WAV)
 
     os.chdir(data)
