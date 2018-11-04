@@ -69,9 +69,9 @@ files = glob.glob('*.TextGrid')
 # prepare report file
 report = open('../report.csv', 'w+')
 
-print('file,turn id,nsyll,npause,dur (s),phonation time,' +
-      'speechrate (nsyll/dur),articulation rate (nsyll/phonation time),' +
-      'turn start, turn end', file=report)
+print('file,turn id,nsyll,npause,dur (s),phonation time,'
+      + 'speechrate (nsyll/dur),articulation rate (nsyll/phonation time),'
+      + 'turn start, turn end', file=report)
 
 for file in files:
     file_name = file.replace('.TextGrid', '')
