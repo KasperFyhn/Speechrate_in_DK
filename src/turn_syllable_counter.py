@@ -73,20 +73,18 @@ os.chdir(data)
 lefts = sorted(glob.glob('*left.TextGrid'))
 rights = sorted(glob.glob('*right.TextGrid'))
 if not len(lefts) == len(rights):
-    print('WARNING: Non-matching numbers of left and right channels')
-n_files = len(lefts)
+    print('WARNING: Non-matching numbers of left and right channels. Exiting.')
+    sys.exit()
+n_filepairs = len(lefts)
 
 # prepare report file
 report = open('../report.csv', 'w+')
-
 print('city,pop density, speaker,gender,turn id,nsyll,npause,dur (s),'
       + 'phon time,speechrate,artic rate,turn start, turn end', file=report)
 
-
 # iterate over pairs of files
 for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
-    
-    print(f'\rProcessing file {n + 1} of {n_files}', end='')
+    print(f'\rProcessing file pair {n + 1} of {n_filepairs}', end='')
     
     # make sure that the zipped files are a pair
     l_name = '_'.join(l_file.split('_')[:4])
@@ -189,7 +187,7 @@ for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
             gender = info[2][1]
         pop_d = pop_densities[city]
 
-        for turn in turns[spkr]:
+        for i, turn in enumerate(turns[spkr] + interjected_turns[spkr]):
 
             # prepare relevant numbers and lists
             start = turn[0][0]['xmin']
@@ -212,9 +210,8 @@ for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
             artic_rate = nsyll / phon_time
             
             if artic_rate != 0:
-                print(f'{city},{pop_d},{spkr_id},{gender},{turn_cnt},{nsyll},'
+                print(f'{city},{pop_d},{spkr_id},{gender},{i},{nsyll},'
                       + f'{npause},{turn_dur},{phon_time},{speech_rate},'
                       + f'{artic_rate},{start},{end}', file=report)
-                turn_cnt += 1 # global turn count for all files
 
 report.close()
