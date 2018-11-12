@@ -1,4 +1,4 @@
-data <- read.csv('/Volumes/dfs/ARTS_Project-Linguistics/Kasper - The Puzzle of Danish/25 dB 3dB 0.1 sec/report-incl_interjects.csv')
+data <- read.csv('/Volumes/dfs/ARTS_Project-Linguistics/Kasper - The Puzzle of Danish/report.csv')
 long.turns <- subset(data, dur..s. > 0.5)
 
 # boxplots for all data
