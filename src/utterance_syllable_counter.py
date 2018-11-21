@@ -62,8 +62,6 @@ def dur(interval: dict):
 pop_densities = {'BORNHOLM': 68, 'KBH': 6846, 'NAESTV': 122, 'NYB': 115,
                  'SKERN': 39, 'SOEN': 151} # 2016
 intra_turn_pause = 1.0
-turn_cnt = 0 # over-all turn count to avoid grouping of turns in the data
-
 
 # get the data folder from the user
 data = input('Please, provide the folder for the .TextGrid files: ')
@@ -79,8 +77,8 @@ n_filepairs = len(lefts)
 
 # prepare report file
 report = open('../report.csv', 'w+')
-print('city,pop density, speaker,gender,turn id,nsyll,npause,dur (s),'
-      + 'phon time,speechrate,artic rate,turn start, turn end', file=report)
+print('file,city,popdensity,speaker,gender,turn id,nsyll,npause,dur,'
+      + 'phon time,speechrate,articrate,turn start, turn end', file=report)
 
 # iterate over pairs of files
 for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
@@ -106,12 +104,18 @@ for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
         if inter[0]['text'] == 'silent': 
             inter.remove(inter[0])
             
-    # make a sorted list of intervals where each inter also has speaker info
+    # make a sorted list of sounding intervals with speaker info and number of
+    # syllables. Merge silent and silent "sounding" areas
     all_inters = []
     for spkr in ['l', 'r']:
         for inter in inters[spkr]:
-            inter['spkr'] = spkr 
-            all_inters.append(inter)
+            if inter['text'] == 'sounding':
+                nsyll = len([point for point in points[spkr]
+                             if inter['xmin'] < point['time'] < inter['xmax']])
+                if nsyll > 0:
+                    inter['nsyll'] = nsyll
+                    inter['spkr'] = spkr
+                    all_inters.append(inter)
     all_inters = sorted(all_inters, key=lambda inter: inter['xmin'])
     
     # determine first speaker
@@ -128,43 +132,32 @@ for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
     interjected_turns = {'l': [], 'r': []}
     turn = {'l': [[]], 'r': [[]]} # temporary for turns and embedded utterances
     
-    # iterate over the list of all intervals now sorted by lower bound
     for inter in all_inters:
-        
-        # determine the "owner" of the interval
+        # determine "owner" of the interval and append to his/her turn
         owner = inter['spkr']
-        
-        # if sounding area, append interval to the appropriate speaker's turn
-        if inter['text'] == 'sounding':
+        if turn[owner] == [[]]: # completely empty turn
             turn[owner][-1].append(inter)
-            
-            # if the speech is not from the current speaker and the new turn
-            # extends over the current turn, terminate the current turn,
-            # append it to the appropriate turns list and switch speakers
-            if owner != spkr and turn[spkr][-1][-1]['xmax'] < inter['xmax']:
+        elif inter['xmin'] - turn[owner][-1][-1]['xmax'] > intra_turn_pause:
+            turn[owner].append([inter]) # start as new utterance in the turn
+        else:
+            turn[owner][-1].append(inter)
+        
+        # if the speech is not from the current speaker and ...
+        if owner != spkr:
+            # if the new turn extends over the current turn, terminate
+            # the current turn, append it to the appropriate turns list and
+            # switch speakers
+            if turn[spkr][-1][-1]['xmax'] < inter['xmax']:
                 turns[spkr].append(turn[spkr])
                 turn[spkr] = [[]]
                 spkr, other = other, spkr
                     
-            # elsewise, if the speech is not from the current speaker and the
-            # new turn does not extend over the current, add it to the owner's
-            # list of interjected turns without breaking the current turn
-            elif owner != spkr and turn[spkr][-1][-1]['xmax'] > inter['xmax']:
+            # if the new turn does not extend over the current, add it to
+            # the owner's list of interjected turns without breaking the
+            # current turn
+            elif turn[spkr][-1][-1]['xmax'] > inter['xmax']:
                 interjected_turns[owner].append(turn[owner])
                 turn[owner] = [[]]
-    
-        # if silent area "owned" by the current speaker and ...
-        elif inter['text'] == 'silence' and owner == spkr:
-
-            # if the pause is an intra-turn pause, add it as such and start
-            # a new embedded utterance
-            if dur(inter) >= intra_turn_pause:
-                turn[spkr].append(inter) # intra-turn pause
-                turn[spkr].append([]) # new utterance
-                
-            # if the pause is an intra-utterance pause, add it to current
-            if dur(inter) < intra_turn_pause:
-                turn[spkr][-1].append(inter)
     
     for spkr in ['l', 'r']:
         
@@ -186,7 +179,7 @@ for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
 
         utterances = [utter
                       for turn in turns[spkr] + interjected_turns[spkr]
-                      for utter in turn]
+                      for utter in turn if not utter == []]
 
         for i, utter in enumerate(utterances):
             
@@ -196,23 +189,21 @@ for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
 
             soundings = [inter for inter in utter
                          if inter['text'] == 'sounding']
-            pauses = [inter for inter in utter
-                      if inter['text'] == 'silent']
             sylls = [point for point in points[spkr]
                      if start < point['time'] < end]
             
             # calculate the numbers to be reported
             nsyll = len(sylls)
-            npause = len(pauses)
+            npause = len(soundings) - 1
             utter_dur = end - start
             phon_time = sum(dur(sound) for sound in soundings)
             speech_rate = nsyll / utter_dur
             artic_rate = nsyll / phon_time
             
             if artic_rate != 0:
-                print(f'{city},{pop_d},{spkr_id},{gender},{i},{nsyll},'
-                      + f'{npause},{utter_dur},{phon_time},{speech_rate},'
-                      + f'{artic_rate},{start},{end}', file=report)
-                
+                print(f'{file_name},{city},{pop_d},{spkr_id},{gender},{i},'
+                      + f'{nsyll},{npause},{utter_dur},{phon_time},'
+                      + f'{speech_rate},{artic_rate},{start},{end}',
+                      file=report)
 
 report.close()
