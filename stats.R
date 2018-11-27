@@ -1,8 +1,8 @@
-data <- read.csv(choose.files())
+all.data <- read.csv(choose.files())
 
 ## STOP - a possibility to run through with data trimmed for short turns as
 ## these more often give very high numbers and a more spread distribution
-data <- subset(data, dur > 0.4)
+data <- subset(all.data, nsyll > 1 & dur > 2)
 
 ## means (trimmed) and standard deviations
 aggregate(data[, 'speechrate'], list(data$city),
@@ -17,10 +17,6 @@ boxplot(speechrate ~ gender*city, data,
         xlab='City and gender',
         ylab='Speech rate (syllables/sec)',
         main='Speech rate between cities and genders')
-boxplot(speechrate ~ log10(popdensity), data,
-        xlab='Log10 of Population density (citizens/square kilometer)',
-        ylab='Speech rate (syllables/sec)',
-        main='Speech rate according to population density')
 
 hist(data$speechrate, breaks = 60, prob = TRUE, main='Speech rates - all data',
      xlab='Speech rate', ylab='Proportional frequency')
@@ -43,7 +39,8 @@ null.model <- glmer(speechrate ~ 1 + (1|speaker/dyad),
                     )
 summary(null.model)
 
-popd.model <- glmer(speechrate ~ sqrt(popdensity) + (1|speaker/dyad),
+data$popdensity = as.numeric(ordered(data$popdensity))
+popd.model <- glmer(speechrate ~  popdensity + (1|speaker/dyad),
                     family=gaussian(link=log), data=data,
                     control = glmerControl(optimizer = "nloptwrap",
                                            calc.derivs = FALSE)
@@ -59,6 +56,7 @@ gender.model <- glmer(speechrate ~ gender + (1|speaker/dyad),
 summary(gender.model)
 anova(null.model, gender.model)
 
+data$turn.id = scale(data$turn.id)
 turn.model <- glmer(speechrate ~ turn.id + (1 + turn.id|speaker/dyad),
                     family=gaussian(link=log), data=data,
                     control = glmerControl(optimizer = "nloptwrap",
