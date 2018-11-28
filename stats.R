@@ -1,8 +1,8 @@
-all.data <- read.csv(choose.files())
+all.data <- read.csv(file.choose())
 
 ## STOP - a possibility to run through with data trimmed for short turns as
 ## these more often give very high numbers and a more spread distribution
-data <- subset(all.data, nsyll > 1 & dur > 2)
+data <- subset(all.data, nsyll > 2 & dur >= 1)
 
 ## means (trimmed) and standard deviations
 aggregate(data[, 'speechrate'], list(data$city),

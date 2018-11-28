@@ -63,6 +63,27 @@ def dur(interval: dict):
     return interval['xmax'] - interval['xmin']
 
 
+def merge_turns(turns, cutoff=0.3):
+    """Merge adjacent turns in a list of turns if they are closer to each other
+    than stated in the cutoff."""
+
+    final_turns = []
+    current_turn = turns.pop(0)
+
+    for turn in turns:
+        gap = turn[0][0]['xmin'] - current_turn[-1][-1]['xmax']
+        if gap < cutoff:
+            current_turn[-1] += turn.pop(0)
+            current_turn += turn
+        else:
+            final_turns.append(current_turn)
+            current_turn = turn
+
+    final_turns.append(current_turn)
+
+    return final_turns
+
+
 pop_densities = {'BORNHOLM': 68, 'KBH': 6846, 'NAESTV': 122, 'NYB': 115,
                  'SKERN': 39, 'SOEN': 151}  # 2016
 intra_turn_pause = 1.0
@@ -135,7 +156,6 @@ for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
     # make lists of turns where each turn can contain several utterances
     # and each utterance can contain several intervals
     turns = {'l': [], 'r': []}
-    interjected_turns = {'l': [], 'r': []}
     turn = {'l': [[]], 'r': [[]]}  # temporary for turns and embedded utterances
 
     for inter in all_inters:
@@ -186,6 +206,9 @@ for n, (l_file, r_file) in enumerate(zip(lefts, rights)):
         elif spkr == 'r':
             gender = info[2][1]
         pop_d = pop_densities[city]
+
+        if not turns[spkr] == []:
+            turns[spkr] = merge_turns(turns[spkr])
 
         for turn in turns[spkr]:
             # prepare relevant numbers and lists
