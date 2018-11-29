@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4359c4c8-8caa-4070-b5bd-ec6bd80d4208" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Speechrate_in_DK.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Speechrate_in_DK.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/turn_syllable_counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/turn_syllable_counter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utterance_syllable_counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utterance_syllable_counter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stats.R" beforeDir="false" afterPath="$PROJECT_DIR$/stats.R" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +14,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/turn_syllable_counter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="72" column="41" lean-forward="true" selection-start-line="72" selection-start-column="41" selection-end-line="72" selection-end-column="41" />
+            <state relative-caret-position="348">
+              <caret line="226" column="42" lean-forward="true" selection-start-line="226" selection-start-column="42" selection-end-line="226" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/utterance_syllable_counter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="220" column="35" lean-forward="true" selection-start-line="220" selection-start-column="35" selection-end-line="220" selection-end-column="35" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -37,42 +48,21 @@
       <list>
         <option value="$PROJECT_DIR$/src/praat_audio_clipper.py" />
         <option value="$PROJECT_DIR$/src/turn_syllable_counter.py" />
+        <option value="$PROJECT_DIR$/src/utterance_syllable_counter.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="width" value="850" />
-    <option name="height" value="1057" />
+    <option name="x" value="2753" />
+    <option name="y" value="21" />
+    <option name="width" value="854" />
+    <option name="height" value="1027" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Speechrate_in_DK" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Speechrate_in_DK" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Speechrate_in_DK" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Speechrate_in_DK" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Speechrate_in_DK" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Speechrate_in_DK" type="462c0819:PsiDirectoryNode" />
-              <item name="test_runs" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -90,7 +80,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.utterance_syllable_counter">
     <configuration name="turn_syllable_counter" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Speechrate_in_DK" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -112,8 +102,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="utterance_syllable_counter" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Speechrate_in_DK" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/utterance_syllable_counter.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.utterance_syllable_counter" />
         <item itemvalue="Python.turn_syllable_counter" />
       </list>
     </recent_temporary>
@@ -129,30 +141,41 @@
       <option name="presentableId" value="Default" />
       <updated>1543313736704</updated>
     </task>
+    <task id="LOCAL-00001" summary="added a post-segmentation turn merger for very close soundings">
+      <created>1543409232211</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1543409232211</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="850" height="1057" extended-state="0" />
-    <editor active="true" />
+    <frame x="2753" y="21" width="854" height="1027" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.12704918" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" side_tool="true" weight="0.32792208" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5025189" side_tool="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4989059" weight="0.39935064" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4974811" visible="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" weight="0.32900432" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Terminal" order="3" side_tool="true" weight="0.4474836" />
       <window_info anchor="right" id="Python Console" order="4" side_tool="true" weight="0.487965" />
     </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added a post-segmentation turn merger for very close soundings" />
+    <option name="LAST_COMMIT_MESSAGE" value="added a post-segmentation turn merger for very close soundings" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/test_runs/report_dk.csv">
@@ -173,8 +196,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/turn_syllable_counter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="72" column="41" lean-forward="true" selection-start-line="72" selection-start-column="41" selection-end-line="72" selection-end-column="41" />
+        <state relative-caret-position="348">
+          <caret line="226" column="42" lean-forward="true" selection-start-line="226" selection-start-column="42" selection-end-line="226" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utterance_syllable_counter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="220" column="35" lean-forward="true" selection-start-line="220" selection-start-column="35" selection-end-line="220" selection-end-column="35" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
